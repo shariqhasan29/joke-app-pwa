@@ -7,23 +7,32 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "robots.txt", "pwa-icon.png"],
+      includeAssets: ["favicon.svg", "robots.txt"],
       manifest: {
         name: "Dad Joke App",
         short_name: "DadJokes",
+        description: "An app that fetches dad jokes",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
         theme_color: "#4a90e2",
         icons: [
           {
-            src: "pwa-icon.png",
+            src: "/icon-192.png",
             sizes: "192x192",
             type: "image/png",
+            purpose: "any maskable",
+          },
+          {
+            src: "/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
           },
         ],
       },
       workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/icanhazdadjoke\.com\//,
@@ -37,6 +46,10 @@ export default defineConfig({
             },
           },
         ],
+      },
+      devOptions: {
+        enabled: true,
+        type: "module",
       },
     }),
   ],
